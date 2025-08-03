@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 
 RUN groupadd --gid 1001 appuser \
     && useradd --uid 1001 --gid 1001 --create-home appuser \
-    apt update && apt upgrade -y
+    && apt update && apt upgrade -y
 USER appuser
 
 WORKDIR /home/appuser/app
