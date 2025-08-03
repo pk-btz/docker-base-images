@@ -21,7 +21,7 @@ jobs:
       - name: Generate Docker matrix
         id: set-matrix
         run: |
-          matrix=$(find docker -mindepth 2 -maxdepth 2 -name Dockerfile | \
+          matrix=$(find docker -mindepth 3 -maxdepth 3 -name Dockerfile | \
             sed -E 's|docker/(.*)/([^/]+)/Dockerfile|{"component":"\1","role":"\2"}|' | \
             jq -s .)
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
