@@ -67,6 +67,5 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/devbase-${{ matrix.component }}-${{ matrix.role }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/devbase-${{ matrix.component }}-${{ matrix.role }}:${{ env.BUILD_TAG }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/devbase-${{ matrix.component }}-${{ matrix.role }}:${{ github.sha }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/devbase-${{ matrix.component }}-${{ matrix.role }}:${{ github.run_number }}
