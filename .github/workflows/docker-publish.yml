@@ -17,14 +17,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - name: Generate Docker matrix
         id: set-matrix
         run: |
-          matrix=$(find docker -mindepth 3 -maxdepth 3 -name Dockerfile | \
+          # Store the generated JSON in a temporary variable
+          # We use 'matrix_json' here to avoid conflict with the output variable name 'matrix'
+          matrix_json=$(find docker -mindepth 3 -maxdepth 3 -name Dockerfile | \
             sed -E 's|docker/(.*)/([^/]+)/Dockerfile|{"component":"\1","role":"\2"}|' | \
             jq -s .)
-          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+          # Set the output variable using the multi-line string syntax (heredoc)
+          # This is crucial for correctly passing JSON arrays to outputs
+          echo "matrix<<EOF" >> $GITHUB_OUTPUT
+          echo "$matrix_json" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Print the generated matrix to the workflow logs for debugging
+          echo "Generated Matrix: $matrix_json"
 
   build-and-push:
     needs: generate-matrix
